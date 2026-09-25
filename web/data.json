@@ -1,5 +1,5 @@
 {
-  "revision": 6,
+  "revision": 7,
   "updated": "2026-09-25",
   "resetHour": 4,
   "servers": [
@@ -161,7 +161,7 @@
       "Sea of Flowers",
       "Tideblossom Coast",
       "Russet Highlands",
-      "Berylline Causeway",
+      "Berylline Vale",
       "Echoback Landing",
       "Beast Fang Ridge",
       "Forest of Falling Stars",
@@ -579,7 +579,7 @@
         {
           "start": "2026-10-05",
           "end": "2026-10-11",
-          "note": "Berylline Causeway · Waleetle"
+          "note": "Berylline Vale · Waleetle"
         },
         {
           "start": "2026-10-12",
