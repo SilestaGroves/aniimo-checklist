@@ -59,6 +59,7 @@ function loadState() {
     remind: s.remind || { events: [24, 3] },
     fired: s.fired || {},
     seenVersion: s.seenVersion || '',
+    names: s.names || 'en',
   };
 }
 
@@ -143,6 +144,27 @@ function eventStatus(ev, now = Date.now()) {
 }
 const eventById = (id) => data.events.find((e) => e.id === id);
 
+// ---------- Названия: английские (как в данных) или официальные русские ----------
+// Тексты в data.json написаны с английскими названиями; в режиме «ru» они заменяются
+// по словарю data.i18n.ru. Чего нет в словаре — остаётся по-английски.
+
+let glossary = { map: {}, re: null };
+
+function buildGlossary() {
+  const map = data.i18n?.ru || {};
+  const keys = Object.keys(map).sort((a, b) => b.length - a.length);
+  const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  glossary = {
+    map,
+    re: keys.length ? new RegExp(`(?<![\\p{L}\\p{N}])(?:${keys.map(escRe).join('|')})(?![\\p{L}\\p{N}])`, 'gu') : null,
+  };
+}
+
+function N(s) {
+  if (!s || state.names !== 'ru' || !glossary.re) return s ?? '';
+  return String(s).replace(glossary.re, (m) => glossary.map[m]);
+}
+
 // Этапы (главы) внутри одного непрерывного ивента: открытые остаются доступны.
 function currentStage(ev, now = Date.now()) {
   if (!ev.stages) return -1;
@@ -152,8 +174,8 @@ function currentStage(ev, now = Date.now()) {
 }
 function eventNote(ev, st, now = Date.now()) {
   const i = currentStage(ev, now);
-  if (i >= 0 && st.state === 'active') return `Глава ${i + 1}: ${ev.stages[i].name}`;
-  return st.w.note || '';
+  if (i >= 0 && st.state === 'active') return `Глава ${i + 1}: ${N(ev.stages[i].name)}`;
+  return N(st.w.note || '');
 }
 const evDoneKey = (ev, st) => `${ev.id}@${st.w.start}`;
 
@@ -239,7 +261,7 @@ function renderTasks(scope) {
     const gDone = g.tasks.filter((t) => isDone(t, bucket.done[t.id])).length;
     html += `<section class="group">
       <header class="group-head">
-        <div><h2>${esc(g.title)}</h2>${g.subtitle ? `<p>${esc(g.subtitle)}</p>` : ''}</div>
+        <div><h2>${esc(N(g.title))}</h2>${g.subtitle ? `<p>${esc(N(g.subtitle))}</p>` : ''}</div>
         <span class="group-count ${gDone === g.tasks.length ? 'complete' : ''}">${gDone}/${g.tasks.length}</span>
       </header>
       ${g.meter ? renderMeter(g, bucket) : ''}
@@ -261,7 +283,7 @@ function renderMeter(g, bucket) {
     <img class="meter-eggs" src="img/eggs.webp" alt="">
     <div class="meter-top">
       <span class="meter-val"><b>${pts}</b> / ${target} очков</span>
-      <span class="meter-reward">${ready ? 'Награды доступны — забирай!' : esc(reward)}</span>
+      <span class="meter-reward">${ready ? 'Награды доступны — забирай!' : esc(N(reward))}</span>
     </div>
     <div class="meter-bar"><i style="width:${Math.min(100, pts / max * 100)}%"></i><span class="meter-mark" style="left:${target / max * 100}%"></span></div>
   </div>`;
@@ -290,8 +312,8 @@ function renderTask(t, val, scope) {
   return `<li class="task ${done ? 'done' : ''} ${partial ? 'partial' : ''}" data-id="${esc(t.id)}" data-scope="${scope}">
     <button class="check" data-act="toggle" aria-pressed="${done}" aria-label="Отметить">${ICON.check}</button>
     <div class="task-body" data-act="toggle">
-      <div class="task-title">${esc(t.title)}</div>
-      ${t.hint ? `<div class="task-hint">${esc(t.hint)}</div>` : ''}
+      <div class="task-title">${esc(N(t.title))}</div>
+      ${t.hint ? `<div class="task-hint">${esc(N(t.hint))}</div>` : ''}
       ${now}
     </div>
     ${counter}${pts}${x}
@@ -355,9 +377,9 @@ function renderEvent(ev, st, now) {
   if (open) {
     const allWins = ev.weekly ? [] : windowsOf(ev);
     details = `<div class="event-details">
-      <p>${esc(ev.desc)}</p>
-      ${ev.todo?.length ? `<h4>Что делать</h4><ul>${ev.todo.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
-      ${ev.rewards ? `<h4>Награды</h4><div class="reward"><img src="img/cube.webp" alt=""><span>${esc(ev.rewards)}</span></div>` : ''}
+      <p>${esc(N(ev.desc))}</p>
+      ${ev.todo?.length ? `<h4>Что делать</h4><ul>${ev.todo.map((t) => `<li>${esc(N(t))}</li>`).join('')}</ul>` : ''}
+      ${ev.rewards ? `<h4>Награды</h4><div class="reward"><img src="img/cube.webp" alt=""><span>${esc(N(ev.rewards))}</span></div>` : ''}
       ${ev.stages ? `<h4>Этапы</h4><div class="stages">${ev.stages.map((sg, i) => {
         const s = dayStart(sg.start);
         const cur = i === stageIdx;
@@ -367,13 +389,13 @@ function renderEvent(ev, st, now) {
           : `<span class="stage-tag" data-until="${s}" data-tpl="через {t}"></span>`;
         return `<div class="stage ${cur ? 'now' : opened ? 'open' : ''}">
           <span class="stage-num">${i + 1}</span>
-          <div class="stage-body"><b>${esc(sg.name)}</b><small>с ${fmtDate(sg.start)}</small></div>${tag}
+          <div class="stage-body"><b>${esc(N(sg.name))}</b><small>с ${fmtDate(sg.start)}</small></div>${tag}
         </div>`;
       }).join('')}</div>` : ''}
       ${allWins.length > 1 ? `<h4>Расписание</h4><div class="windows">${allWins.map((w) => {
         const b = boundsOf(w);
         const cls = now >= b.e ? 'past' : now >= b.s ? 'now' : '';
-        return `<span class="win ${cls}">${fmtRange(w)}${w.note ? `<small>${esc(w.note)}</small>` : ''}</span>`;
+        return `<span class="win ${cls}">${fmtRange(w)}${w.note ? `<small>${esc(N(w.note))}</small>` : ''}</span>`;
       }).join('')}</div>` : ''}
       ${ev.weekly ? `<h4>Расписание</h4><div class="windows"><span class="win now">каждую неделю: ${WEEKDAYS[new Date(ev.weekly.from + 'T00:00:00Z').getUTCDay()]} ${data.resetHour}:00 → ${ev.weekly.days} дн.</span></div>` : ''}
     </div>`;
@@ -383,7 +405,7 @@ function renderEvent(ev, st, now) {
     <div class="event-head" data-act="expand">
       <div class="event-main">
         <div class="event-meta"><span class="cat">${esc(cat.name)}</span>${badge}</div>
-        <h3 class="event-name">${esc(ev.name)}</h3>
+        <h3 class="event-name">${esc(N(ev.name))}</h3>
         ${note && st.state !== 'ended' ? `<div class="event-note">${st.state === 'upcoming' ? 'Далее: ' : ''}${esc(note)}</div>` : ''}
       </div>
       ${canCheck ? `<button class="check ${done ? 'on' : ''}" data-act="evdone" title="Отметить выполненным" aria-pressed="${done}">${ICON.check}</button>` : ''}
@@ -428,7 +450,7 @@ function renderWeather() {
         <label class="wx-field"><span>Регион</span>
           <input type="text" name="region" list="wx-regions" maxlength="40" placeholder="Например, Nimbus Fields" value="${esc(last.region)}" required>
         </label>
-        <datalist id="wx-regions">${data.weather.regions.map((r) => `<option value="${esc(r)}">`).join('')}</datalist>
+        <datalist id="wx-regions">${data.weather.regions.map((r) => `<option value="${esc(N(r))}">`).join('')}</datalist>
         <div class="wx-field"><span>Погода</span>
           <div class="seg wx-kinds">${data.weather.types.map((t) =>
             `<button type="button" data-act="wx-kind" data-kind="${t.id}" aria-pressed="${t.id === last.kind}" style="--c:${t.color}">${WX_ICON[t.id] || ''}${esc(t.name)}</button>`).join('')}
@@ -460,7 +482,7 @@ function renderWx(w, now) {
   return `<li class="task wx-item ${live ? 'live' : ''}" style="--c:${t.color}">
     <span class="wx-icon">${WX_ICON[w.kind] || ''}</span>
     <div class="task-body">
-      <div class="task-title">${esc(t.name)} · ${esc(w.region)}</div>
+      <div class="task-title">${esc(t.name)} · ${esc(N(w.region))}</div>
       <div class="task-hint">${dayWord(w.start)} в ${localTime(w.start)} · ${w.lead ? `напомню за ${w.lead} мин` : 'напомню в начале'}</div>
     </div>
     ${live ? '<span class="wx-when">идёт</span>' : `<span class="wx-when" data-until="${w.start}" data-tpl="через {t}"></span>`}
@@ -504,7 +526,7 @@ function syncReminders() {
     const t = wxType(w.kind);
     items.push({
       id: 'wx:' + w.id, at: w.start - w.lead * 60e3, until: w.start + 15 * 60e3, end: w.start, color: t.color,
-      title: `${t.name} — ${w.region}`,
+      title: `${t.name} — ${N(w.region)}`,
       text: w.lead ? `Начнётся через {left}, в ${localTime(w.start)}` : `Начинается сейчас, в ${localTime(w.start)}`,
     });
   }
@@ -522,7 +544,7 @@ function syncReminders() {
     for (const h of pick) {
       items.push({
         id: `ev:${ev.id}@${st.w.start}:${h}`, at: st.e - h * H, until: st.e, end: st.e, color,
-        title: `Заканчивается: ${ev.name}`,
+        title: `Заканчивается: ${N(ev.name)}`,
         text: `Осталось {left} — до ${fmtDate(st.w.end)}, ${localTime(st.e)}`,
       });
     }
@@ -556,6 +578,17 @@ function renderSettings() {
         `<button data-act="server" data-server="${s.id}" aria-pressed="${s.id === state.server}">${esc(s.name)} <span style="opacity:.6">UTC${s.offset >= 0 ? '+' : '−'}${Math.abs(s.offset)}</span></button>`).join('')}
       </div>
       <p class="field-hint">Сброс в ${String(data.resetHour).padStart(2, '0')}:00 по серверу — у тебя это ${localTime(reset)}. Викли — ${weekDay} ${localTime(nextWeeklyReset())}.</p>
+    </div>
+
+    <div class="field">
+      <span class="field-label">Названия ивентов, анимо и мест</span>
+      <div class="seg">
+        <button data-act="names" data-names="en" aria-pressed="${state.names !== 'ru'}">English</button>
+        <button data-act="names" data-names="ru" aria-pressed="${state.names === 'ru'}">Русские</button>
+      </div>
+      <p class="field-hint">${state.names === 'ru'
+        ? 'Как в русском клиенте: Изобилие энергии жил, Ирисалис, Танцомон. Где официального перевода пока нет — остаётся английское.'
+        : 'Как в английском клиенте: Vein Abundance, Irisalis, Dazmand.'} Описания в обоих вариантах на русском.</p>
     </div>
 
     ${hs ? `
@@ -595,7 +628,7 @@ function renderSettings() {
       <span class="field-label">Скрытые задачи</span>
       ${hiddenTasks.length
         ? `<div class="hidden-list">${hiddenTasks.map((t) =>
-            `<div class="hidden-item"><span>${esc(t.title)}</span><button class="link" data-act="unhide" data-id="${esc(t.id)}">Вернуть</button></div>`).join('')}</div>`
+            `<div class="hidden-item"><span>${esc(N(t.title))}</span><button class="link" data-act="unhide" data-id="${esc(t.id)}">Вернуть</button></div>`).join('')}</div>`
         : `<p class="field-hint" style="margin:0">Нет. Наведи на задачу и нажми ×, чтобы убрать ненужную.</p>`}
     </div>
 
@@ -788,6 +821,7 @@ function onSheetClick(e) {
   switch (el.dataset.act) {
     case 'close-settings': openSheet(null); return;
     case 'server': state.server = el.dataset.server; rollover(); break;
+    case 'names': state.names = el.dataset.names; break;
     case 'hotkey': send({ type: 'set-hotkey', value: el.dataset.hotkey }); return;
     case 'autostart': send({ type: 'set-autostart', value: el.getAttribute('aria-checked') !== 'true' }); return;
     case 'ev-remind': {
@@ -904,6 +938,7 @@ function bindUI() {
       } else if (msg.type === 'data-updated') {
         loadData().then((fresh) => {
           data = fresh;
+          buildGlossary();
           render();
           if (sheetMode === 'settings') renderSettings();
         });
@@ -924,6 +959,7 @@ async function loadData() {
 
 async function init() {
   data = await loadData();
+  buildGlossary();
   changelog = await fetch('changelog.json', { cache: 'no-store' }).then((r) => r.json()).catch(() => []);
   state = loadState();
   rollover();

@@ -11,7 +11,7 @@
     <AssemblyName>AniimoChecklist</AssemblyName>
     <RootNamespace>AniimoChecklist</RootNamespace>
     <Product>Aniimo Checklist</Product>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <!-- Пакет WebView2 тянет WPF-сборку, которая нам не нужна -->
