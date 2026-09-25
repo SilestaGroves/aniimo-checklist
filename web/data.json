@@ -1,5 +1,5 @@
 {
-  "revision": 4,
+  "revision": 5,
   "updated": "2026-09-25",
   "resetHour": 4,
   "servers": [
@@ -91,7 +91,18 @@
       "Companion Handbook": "Справочник компаньона",
       "Lost Isles": "Затерянные острова",
       "Research Center": "Исследовательский центр",
-      "Chaos Mode": "режим «Хаос»"
+      "Chaos Mode": "режим «Хаос»",
+      "Institute Guide": "Путеводитель по институту",
+      "Daily Activity": "Ежедневная активность",
+      "Primegy": "первонергии",
+      "Season Stamps": "сезонных марок",
+      "Stamp Rush": "Марочная лихорадка",
+      "Curio Corner": "Лавка на углу",
+      "Daily Supply Pack": "Ежедневный набор припасов",
+      "Monthly Pass": "Ежемесячный пропуск",
+      "Tea Party": "Звёздное чаепитие",
+      "Astra": "Астра",
+      "Credits": "кредиты"
     }
   },
   "weather": {
@@ -135,12 +146,12 @@
   "daily": [
     {
       "id": "activity",
-      "title": "Доска активности",
+      "title": "Daily Activity",
       "subtitle": "Institute Guide → первая вкладка",
       "meter": {
         "target": 500,
         "max": 700,
-        "reward": "Active Aniimo Egg Pack + EXP"
+        "reward": "Награды на 100 · 200 · 300 · 400 · 500"
       },
       "tasks": [
         {
@@ -157,9 +168,9 @@
         },
         {
           "id": "d_stamps",
-          "title": "Получить 50 штампов сезона",
+          "title": "Набрать 50 Season Stamps",
           "pts": 200,
-          "hint": "Wild Surge, Альфы, Holo-Battle Sim, Egg Heist, домашние заказы"
+          "hint": "У марок есть дневной лимит — если упёрся раньше 50, остальных 4 заданий как раз хватит на 500"
         },
         {
           "id": "d_catch",
@@ -172,12 +183,12 @@
           "id": "d_shop",
           "title": "Купить любой предмет",
           "pts": 100,
-          "hint": "Любой магазин в Астре, например Curio Corner"
+          "hint": "Любой магазин, например Curio Corner"
         },
         {
           "id": "d_claim",
           "title": "Забрать награды активности",
-          "hint": "Хватит 500 из 700 — одну задачу можно пропустить"
+          "hint": "Хватит 500 из 700. Лимит в день: EXP 3000, Credits 1200"
         }
       ]
     },
@@ -194,22 +205,22 @@
         {
           "id": "d_home",
           "title": "Homeland: заказы, урожай, посадка",
-          "hint": "Проверь еду работникам. Заказы дают Home Coins и штампы"
+          "hint": "Проверь еду работникам. Заказы приносят Home Coins и немало Season Stamps"
         },
         {
           "id": "d_supply",
           "title": "Daily Supply Pack",
-          "hint": "Institute Exclusive Shop, 50 Primegy. Открывается с ранга «Student III»"
+          "hint": "Магазин → Обмен предметов, 50 Primegy. Открывается с ранга «Student III»"
         },
         {
           "id": "d_vendor",
-          "title": "Mysterious Vendor (Weston, Astra)",
-          "hint": "Aniipod Track, Held Item Cores, Flux Crystals за Credits"
+          "title": "Mysterious Vendor",
+          "hint": "Магазин → Лавка на углу. Новые товары каждый день, покупки за Credits"
         },
         {
           "id": "d_curio",
           "title": "Curio Corner: бесплатное обновление",
-          "hint": "4 слота, нужное можно закрепить перед обновлением"
+          "hint": "Магазин → Curio Corner. 4 слота, нужное можно закрепить перед обновлением"
         }
       ]
     },
@@ -256,7 +267,7 @@
         },
         {
           "id": "d_whos",
-          "title": "Who's That Aniimo?: фото по подсказке",
+          "title": "Who's That Aniimo? — фото по подсказке",
           "event": "whos",
           "hint": "Фотографируй Aniimo с нужными признаками — чем раньше угадаешь, тем лучше награда"
         },
@@ -293,34 +304,37 @@
     {
       "id": "handbook",
       "title": "Companion Handbook",
-      "subtitle": "EXP компаньона и боевой пропуск",
+      "subtitle": "Недельные задания. Ещё есть вкладка сезонных заданий",
       "tasks": [
         {
           "id": "w_ch_primegy",
           "title": "Потратить 200 Primegy",
           "max": 200,
-          "step": 50
+          "step": 50,
+          "pts": 1000
         },
         {
           "id": "w_ch_catch",
           "title": "Поймать 30 Aniimo",
           "max": 30,
-          "step": 5
+          "step": 5,
+          "pts": 1000
         },
         {
           "id": "w_ch_login",
           "title": "Заходить в игру 3 дня",
-          "max": 3
+          "max": 3,
+          "pts": 1200
         }
       ]
     },
     {
       "id": "stamps",
-      "title": "Штампы сезона",
+      "title": "Stamp Rush",
       "tasks": [
         {
           "id": "w_stamps",
-          "title": "Stamp Rush: 1000 штампов",
+          "title": "1000 Season Stamps за неделю",
           "max": 1000,
           "step": 50,
           "hint": "Egg Heist 600 · Заказы 600 · Catch Report 400 · Альфы 300 · Interlink 300 · Wild Surge 300 · Tea Party 200 · Holo-Battle Sim 180. Остаток переносится"
@@ -328,9 +342,10 @@
         {
           "id": "w_heist",
           "title": "Operation: Egg Heist",
-          "hint": "PvEvP (Lost Isles), команда из 3 человек — самый жирный источник штампов"
+          "hint": "PvEvP (Lost Isles), команда из 3 человек — самый жирный источник Season Stamps"
         }
-      ]
+      ],
+      "subtitle": "Institute Guide → вкладка Stamp Rush"
     },
     {
       "id": "event-weekly",
@@ -398,9 +413,9 @@
       "id": "season1",
       "name": "Season 1: Departure with the Wind",
       "category": "season",
-      "desc": "Первый сезон: сезонные штампы, Companion Handbook и сезонные награды.",
+      "desc": "Первый сезон: сбор Season Stamps, недельные и сезонные задания Companion Handbook, сезонные награды.",
       "todo": [
-        "Добивать еженедельный кап штампов (1000)",
+        "Добивать недельный кап Season Stamps (1000)",
         "Companion Handbook: закрывать недельные задания"
       ],
       "rewards": "Награды боевого пропуска, косметика",
@@ -587,7 +602,7 @@
         "Пройти 3 маршрута — награды за суммарные звёзды, маршруты можно перепроходить",
         "Помогать другим поднять ранг — за это отдельные награды"
       ],
-      "rewards": "Штампы сезона (до 300 в неделю), награды за звёзды и помощь",
+      "rewards": "До 300 Season Stamps в неделю, награды за звёзды и помощь",
       "weekly": {
         "from": "2026-09-24",
         "days": 4
@@ -790,7 +805,7 @@
       "id": "setoff",
       "name": "Set Off Together!",
       "category": "login",
-      "desc": "Открывается после первого пополнения (ежемесячный пропуск или Companion Handbook тоже засчитываются). Сразу — Emberpup Set, дальше вход 3 дня.",
+      "desc": "Открывается после первого пополнения (Monthly Pass или Companion Handbook тоже засчитываются). Сразу — Emberpup Set, дальше вход 3 дня.",
       "todo": [
         "Сделать любую покупку, чтобы активировать",
         "Забрать Emberpup Set",
@@ -814,7 +829,7 @@
         "Проходить испытания",
         "Забирать награду за тренировку"
       ],
-      "rewards": "Материалы развития, штампы сезона (до 180 в неделю)",
+      "rewards": "Материалы развития, до 180 Season Stamps в неделю",
       "windows": [
         {
           "start": "2026-09-16"
@@ -827,7 +842,7 @@
       "category": "battle",
       "desc": "Рейд — Lost Isles: ищи редкие яйца и успешно эвакуируйся с ними. Команда из 3 человек, PvEvP.",
       "todo": [
-        "Главный источник штампов сезона — до 600 в неделю",
+        "Главный источник Season Stamps — до 600 в неделю",
         "С уровня IV «Elite Egg Seeker» открывается Chaos Mode"
       ],
       "rewards": "Яйца, в том числе Prismana Egg",
@@ -841,11 +856,11 @@
       "id": "vendor",
       "name": "Mysterious Vendor",
       "category": "login",
-      "desc": "У торговца каждый день новые товары — загляни за выгодными предложениями.",
+      "desc": "Магазин → Лавка на углу. Каждый день новые товары — загляни за выгодными предложениями.",
       "todo": [
         "Проверять ассортимент после сброса"
       ],
-      "rewards": "Aniipod Track, Held Item Cores, Flux Crystals",
+      "rewards": "Товары за Credits",
       "windows": [
         {
           "start": "2026-09-16"
