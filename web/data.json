@@ -1,0 +1,274 @@
+{
+  "revision": 1,
+  "updated": "2026-09-25",
+  "resetHour": 4,
+  "servers": [
+    { "id": "eu", "name": "Европа", "offset": 0 },
+    { "id": "asia", "name": "Азия", "offset": 8 },
+    { "id": "na", "name": "Америка", "offset": -4 }
+  ],
+
+  "weather": {
+    "types": [
+      { "id": "rain",     "name": "Дождь",          "color": "#1e8bf0" },
+      { "id": "storm",    "name": "Гроза",          "color": "#e8a100" },
+      { "id": "snow",     "name": "Снег",           "color": "#6f8fd8" },
+      { "id": "prismana", "name": "Prismana Flow",  "color": "#8a5cf6" }
+    ],
+    "regions": [
+      "Breezy Plains", "Nimbus Fields", "Sea of Flowers", "Forest of Falling Stars", "The Argent Strait",
+      "Beast Fang Ridge", "Echoback Landing", "Tideblossom Coast", "Rosetower Woods", "Russet Highlands",
+      "Driftwise Meadow", "Berylline Vale"
+    ]
+  },
+
+  "daily": [
+    {
+      "id": "activity",
+      "title": "Доска активности",
+      "subtitle": "Institute Guide → первая вкладка",
+      "meter": { "target": 500, "max": 700, "reward": "Active Aniimo Egg Pack + EXP" },
+      "tasks": [
+        { "id": "d_login", "title": "Войти в игру", "pts": 100, "hint": "Засчитывается автоматически" },
+        { "id": "d_primegy", "title": "Потратить 60 Primegy", "pts": 200, "hint": "Альфа — 30, Омега — 50, сундук Holo-Battle — 30. Не держи на капе 300: реген стоит" },
+        { "id": "d_stamps", "title": "Получить 50 штампов сезона", "pts": 200, "hint": "Wild Surge, Альфы, Holo-Battle Sim, Egg Heist, заказы Homeland" },
+        { "id": "d_catch", "title": "Поймать 5 Aniimo", "pts": 100, "max": 5, "hint": "Любые виды, повторы тоже считаются" },
+        { "id": "d_shop", "title": "Купить любой предмет", "pts": 100, "hint": "Любой магазин в Астре, например Curio Corner" },
+        { "id": "d_claim", "title": "Забрать награды активности", "hint": "Хватит 500 из 700 — одну задачу можно пропустить" }
+      ]
+    },
+    {
+      "id": "routine",
+      "title": "Рутина",
+      "subtitle": "~5 минут",
+      "tasks": [
+        { "id": "d_hatch", "title": "Хэтчинатор: забрать и заложить яйца", "hint": "Заполни все слоты, Incredible — в приоритете. Инкубация идёт и оффлайн" },
+        { "id": "d_home", "title": "Homeland: заказы, урожай, посадка", "hint": "Проверь еду работникам. Заказы дают Home Coins и штампы" },
+        { "id": "d_supply", "title": "Daily Supply Pack", "hint": "Institute Exclusive Shop, 50 Primegy. Открывается с ранга Student III" },
+        { "id": "d_vendor", "title": "Mysterious Vendor (Уэстон, Астра)", "hint": "Aniipod Track, Held Item Cores, Flux Crystals за Credits" },
+        { "id": "d_curio", "title": "Curio Corner: бесплатное обновление", "hint": "4 слота, нужное можно закрепить перед обновлением" }
+      ]
+    },
+    {
+      "id": "event-daily",
+      "title": "Ивенты · каждый день",
+      "subtitle": "Появляются, пока идёт ивент",
+      "tasks": [
+        { "id": "d_checkin", "title": "Отметиться в логин-ивентах", "hint": "Вкладка Events: Set Out, Pathfinder!, Journey Handbook, Journey Moments, Boundless Twining" },
+        { "id": "d_sparkelf", "title": "SPARKELF: собрать Sparks за день", "event": "sparkelf", "hint": "500 Sparks → яйцо Prismana Sparkelf с Perfect-потенциалом" },
+        { "id": "d_trail", "title": "Tracing the Trail: отправить экспедиции", "event": "trail", "hint": "2–4 Aniimo на таймерные расследования → Irisalis Petals, Flux Crystals" },
+        { "id": "d_legend", "title": "Legendary Journey: продвинуть главу", "event": "legend", "hint": "Копи Irisalis Petals: 99 — на Legendary Aniipod, дальше по 50 на Windchaser's Departure" },
+        { "id": "d_dazmand", "title": "Aniimo Discovery: попытки поиска Dazmand", "event": "dazmand", "hint": "Потрать все Search Attempts, чтобы выследить и поймать Dazmand" },
+        { "id": "d_whos", "title": "Who's That Aniimo?: фото по подсказке", "event": "whos", "hint": "Фотографируй Aniimo с нужными признаками — чем раньше угадаешь, тем лучше награда" },
+        { "id": "d_eco", "title": "Idyll Ecological Investigation", "event": "eco", "hint": "Сканируй существ по теме региона" }
+      ]
+    }
+  ],
+
+  "weekly": [
+    {
+      "id": "bosses",
+      "title": "Боссы и рейды",
+      "tasks": [
+        { "id": "w_boss", "title": "Еженедельные боссы (Омега / Альфа)", "max": 3, "hint": "50 Primegy за попытку. Материалы Resonance Star-Up и Capability Awakening" },
+        { "id": "w_interlink", "title": "Holo-Battle Interlink", "event": "interlink", "hint": "Кооп-рейд против симуляций Альф, Чт–Вс. С ранга Trailblazer I" }
+      ]
+    },
+    {
+      "id": "handbook",
+      "title": "Companion Handbook",
+      "subtitle": "EXP компаньона и боевой пропуск",
+      "tasks": [
+        { "id": "w_ch_primegy", "title": "Потратить 200 Primegy", "max": 200, "step": 50 },
+        { "id": "w_ch_catch", "title": "Поймать 30 Aniimo", "max": 30, "step": 5 },
+        { "id": "w_ch_login", "title": "Заходить в игру 3 дня", "max": 3 }
+      ]
+    },
+    {
+      "id": "stamps",
+      "title": "Штампы сезона",
+      "tasks": [
+        { "id": "w_stamps", "title": "Stamp Rush: 1000 штампов", "max": 1000, "step": 50, "hint": "Egg Heist 600 · Заказы 600 · Catch Report 400 · Альфы 300 · Interlink 300 · Wild Surge 300 · Tea Party 200 · Holo-Battle Sim 180. Остаток переносится" },
+        { "id": "w_heist", "title": "Operation: Egg Heist", "hint": "PvEvP в команде из 3 человек — самый жирный источник штампов" }
+      ]
+    },
+    {
+      "id": "event-weekly",
+      "title": "Ивенты недели",
+      "subtitle": "Появляются, пока идёт ивент",
+      "tasks": [
+        { "id": "w_vein", "title": "Vein Abundance: 3 сессии Nurture", "event": "vein", "max": 3, "hint": "Первые 3 Nurture в регионе недели дают ×1.5 Prismatic Energy" },
+        { "id": "w_egg", "title": "Eggceleration: заложить лучшие яйца", "event": "egg", "hint": "Пт–Вс вылупление вдвое быстрее — время для Legendary и Mystery Egg Box" },
+        { "id": "w_glamour", "title": "Glamour Star: пройти прослушивание", "event": "glamour", "hint": "Собери образ под тему недели" }
+      ]
+    }
+  ],
+
+  "categories": {
+    "season":  { "name": "Сезон",       "color": "#8a5cf6" },
+    "story":   { "name": "Сюжет",       "color": "#f08c00" },
+    "login":   { "name": "Логин",       "color": "#1e8bf0" },
+    "boost":   { "name": "Буст",        "color": "#12b886" },
+    "hunt":    { "name": "Охота",       "color": "#f76707" },
+    "mini":    { "name": "Мини-ивент",  "color": "#e64980" },
+    "battle":  { "name": "Бой",         "color": "#e03131" }
+  },
+
+  "events": [
+    {
+      "id": "season1", "name": "Season 1: Departure with the Wind", "category": "season",
+      "desc": "Первый сезон: сезонные штампы, Companion Handbook и сезонные награды.",
+      "todo": ["Добивать еженедельный кап штампов (1000)", "Закрывать недели Companion Handbook"],
+      "rewards": "Награды боевого пропуска, косметика",
+      "windows": [{ "start": "2026-09-16", "end": "2026-10-28" }]
+    },
+    {
+      "id": "legend", "name": "Legendary Journey: Irisalis", "category": "story",
+      "desc": "Один ивент из трёх глав. Лепестки, этапы и крафт общие: открытые главы остаются доступны, при смене главы ничего не сгорает.",
+      "stages": [
+        { "start": "2026-09-16", "name": "Trail of Butterfly Shadows" },
+        { "start": "2026-09-25", "name": "Walking with Irisalis" },
+        { "start": "2026-12-01", "name": "Gift of Blessing" }
+      ],
+      "todo": [
+        "Собирать Irisalis Petals (Breezy Plains, Tracing the Trail)",
+        "99 лепестков — Legendary Aniipod: Irisalis, открывает разлом к Irisalis",
+        "Дальше по 50 лепестков — Windchaser's Departure (до 10 шт., гарантированная поимка)"
+      ],
+      "rewards": "Легендарный Aniimo Irisalis, Legendary Aniipod, магазин Legendary Journey",
+      "windows": [{ "start": "2026-09-16", "end": "2026-12-09" }]
+    },
+    {
+      "id": "dazmand", "name": "Aniimo Discovery: Dazmand", "category": "hunt",
+      "desc": "Двухнедельное расследование: выследи и поймай Dazmand.",
+      "todo": ["Тратить Search Attempts каждый день", "Поймать Dazmand"],
+      "rewards": "Dazmand, награды за исследование (с ранга Student II)",
+      "windows": [{ "start": "2026-09-25", "end": "2026-10-08" }]
+    },
+    {
+      "id": "vein", "name": "Vein Abundance", "category": "boost",
+      "desc": "Еженедельный буст Prismana в одном регионе. В последнюю неделю — карнавал со всеми четырьмя.",
+      "todo": ["Первые 3 сессии Nurture в регионе недели — ×1.5 Prismatic Energy", "Лови Prismana-формы в регионе недели"],
+      "rewards": "Prismatic Energy, Prismana Aniimo",
+      "windows": [
+        { "start": "2026-09-18", "end": "2026-09-20", "note": "Forest of Falling Stars · Celestis" },
+        { "start": "2026-09-21", "end": "2026-09-27", "note": "Beast Fang Ridge · Glynsera" },
+        { "start": "2026-09-28", "end": "2026-10-04", "note": "Rosetower Woods · Melloblum" },
+        { "start": "2026-10-05", "end": "2026-10-11", "note": "Berylline Vale · Waleetle" },
+        { "start": "2026-10-12", "end": "2026-10-18", "note": "Nimbus Fields · Inferlupa" },
+        { "start": "2026-10-19", "end": "2026-10-25", "note": "Prismana Carnival · все четыре" }
+      ]
+    },
+    {
+      "id": "egg", "name": "Eggceleration (Hatch Haste)", "category": "boost",
+      "desc": "По выходным (Пт–Вс) яйца в Хэтчинаторе вылупляются вдвое быстрее.",
+      "todo": ["Копить редкие яйца к пятнице", "Заложить Legendary / Incredible / Mystery Egg Box"],
+      "rewards": "Быстрое вылупление",
+      "windows": [
+        { "start": "2026-09-18", "end": "2026-09-20" },
+        { "start": "2026-09-25", "end": "2026-09-27" },
+        { "start": "2026-10-02", "end": "2026-10-04" },
+        { "start": "2026-10-09", "end": "2026-10-11" },
+        { "start": "2026-10-16", "end": "2026-10-18" },
+        { "start": "2026-10-23", "end": "2026-10-25" }
+      ]
+    },
+    {
+      "id": "interlink", "name": "Holo-Battle Interlink", "category": "battle",
+      "desc": "Еженедельный кооп-рейд против симуляций Альф: с четверга 04:00 до понедельника 03:59.",
+      "todo": ["Собрать группу и пройти рейд", "До 300 штампов сезона в неделю"],
+      "rewards": "Штампы сезона, материалы (с ранга Trailblazer I)",
+      "weekly": { "from": "2026-09-24", "days": 4 }
+    },
+    {
+      "id": "glamour", "name": "Glamour Star", "category": "mini",
+      "desc": "Модный конкурс: собери образ под тему прослушивания.",
+      "todo": ["Подобрать образ под тему", "Пройти прослушивание"],
+      "rewards": "Косметика (с ранга Student II)",
+      "windows": [
+        { "start": "2026-09-25", "end": "2026-10-01", "note": "Тема: Floral Soirée" },
+        { "start": "2026-10-09", "end": "2026-10-15" },
+        { "start": "2026-10-23", "end": "2026-10-29" }
+      ]
+    },
+    {
+      "id": "whos", "name": "Who's That Aniimo?", "category": "mini",
+      "desc": "Угадай Aniimo по силуэту и подсказкам, фотографируя существ с общими признаками.",
+      "todo": ["Сделать фото Aniimo с нужными признаками", "Угадать как можно раньше — награда выше"],
+      "rewards": "Яйцо",
+      "windows": [
+        { "start": "2026-09-16", "end": "2026-09-24" },
+        { "start": "2026-10-02", "end": "2026-10-08" },
+        { "start": "2026-10-16", "end": "2026-10-22" },
+        { "start": "2026-10-30", "end": "2026-11-05" }
+      ]
+    },
+    {
+      "id": "eco", "name": "Idyll Ecological Investigation", "category": "mini",
+      "desc": "Полевое исследование: сканируй существ по теме региона.",
+      "todo": ["Выполнить задания исследования"],
+      "rewards": "Ресурсы для развития",
+      "windows": [
+        { "start": "2026-09-16", "end": "2026-09-20" },
+        { "start": "2026-10-02", "end": "2026-10-08" },
+        { "start": "2026-10-16", "end": "2026-10-22" }
+      ]
+    },
+    {
+      "id": "trail", "name": "Tracing the Trail", "category": "story",
+      "desc": "Экспедиции: отправляй 2–4 Aniimo на таймерные расследования.",
+      "todo": ["Держать экспедиции всегда занятыми"],
+      "rewards": "Irisalis Petals, Flux Crystals",
+      "windows": [{ "start": "2026-09-20", "end": "2026-12-09" }]
+    },
+    {
+      "id": "sparkelf", "name": "SPARKELF × Aniimo: Meet Your Fire Companion", "category": "login",
+      "desc": "Коллаборация: копи Sparks каждый день до 10 декабря.",
+      "todo": ["Собирать Sparks ежедневно", "500 Sparks — яйцо вылупится с Perfect-потенциалом"],
+      "rewards": "Prismana Sparkelf Egg, косметика",
+      "windows": [{ "start": "2026-09-16", "end": "2026-12-10" }]
+    },
+    {
+      "id": "handbook", "name": "Journey Handbook", "category": "login",
+      "desc": "30 дней накопительных входов, награды на 1, 5, 10, 15, 20, 25 и 30 день.",
+      "todo": ["Заходить и забирать награду"],
+      "rewards": "Косметика",
+      "windows": [{ "start": "2026-09-16", "end": "2026-10-28" }]
+    },
+    {
+      "id": "moments", "name": "Journey Moments", "category": "login",
+      "desc": "Логин-ивент: заходи нужное число дней за подарки.",
+      "todo": ["Заходить и забирать награду"],
+      "rewards": "Sparkling Crystals, Sparkling Egg",
+      "windows": [{ "start": "2026-10-01", "end": "2026-10-28" }]
+    },
+    {
+      "id": "setout", "name": "Set Out, Pathfinder!", "category": "login",
+      "desc": "Стартовый трек из 7 отметок.",
+      "todo": ["Отметиться 7 дней"],
+      "rewards": "На 7-й день — Sparkling Cube (Perfect-потенциал)",
+      "windows": [{ "start": "2026-09-16" }]
+    },
+    {
+      "id": "prismana-pact", "name": "Prismana Pact", "category": "login",
+      "desc": "Выбери одного из 14 бесплатных Prismana Aniimo.",
+      "todo": ["Дойти до ранга Wayfarer I", "Выбрать Prismana"],
+      "rewards": "Prismana Egg",
+      "windows": [{ "start": "2026-09-16" }]
+    },
+    {
+      "id": "twining", "name": "Boundless Twining", "category": "login",
+      "desc": "Награды за вход с разных платформ (запуск мобильной версии).",
+      "todo": ["Зайти с ПК / консоли и с телефона"],
+      "rewards": "Логин-награды",
+      "windows": [{ "start": "2026-09-23" }]
+    },
+    {
+      "id": "heist-chaos", "name": "Operation: Egg Heist — Chaos Mode", "category": "battle",
+      "desc": "Самая сложная сложность Egg Heist.",
+      "todo": ["Нужен ранг Tier IV Elite Egg Seeker и Chaos Ticket"],
+      "rewards": "Prismana Egg, повышенный шанс Prismatic",
+      "windows": [{ "start": "2026-09-24" }]
+    }
+  ]
+}
