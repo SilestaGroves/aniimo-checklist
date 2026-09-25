@@ -1,5 +1,5 @@
 {
-  "revision": 5,
+  "revision": 6,
   "updated": "2026-09-25",
   "resetHour": 4,
   "servers": [
@@ -56,8 +56,8 @@
       "Student II": "Студент II",
       "Student III": "Студент III",
       "Trailblazer I": "Первопроходец I",
-      "Forest of Falling Stars": "лес Падающих Звёзд",
-      "Rosetower Woods": "лес Розовой Башни",
+      "Forest of Falling Stars": "Лес падающих звезд",
+      "Rosetower Woods": "Лес Розовой Башни",
       "Berylline Causeway": "Берилловый перешеек",
       "Idyll": "Идиллия",
       "Irisalis": "Ирисалис",
@@ -102,7 +102,31 @@
       "Monthly Pass": "Ежемесячный пропуск",
       "Tea Party": "Звёздное чаепитие",
       "Astra": "Астра",
-      "Credits": "кредиты"
+      "Credits": "кредиты",
+      "Nimbus Fields": "Дождливые поля",
+      "Mistwoods": "Туманный лес",
+      "Argent Strait": "Серебряный пролив",
+      "Blitzwood": "Лес молний",
+      "Sea of Flowers": "Море цветов",
+      "Tideblossom Coast": "Побережье Цветущих приливов",
+      "Russet Highlands": "Рыжее высокогорье",
+      "Berylline Vale": "Берилловый перешеек",
+      "Echoback Landing": "Заводь эхолота",
+      "Driftwise Meadow": "Луг странствий",
+      "Zephyrus Landbridge": "Мост западного ветра",
+      "Hatchinator": "Инкубатор",
+      "Harvest Dailies": "Урожайные ежедневные задания",
+      "Moondew Crops": "Лунноросяные культуры",
+      "Moondew Radish": "Лунноросяная редька",
+      "Waxing Moon Pepper": "Перец растущей луны",
+      "Harvest Moon Gathering": "Праздник урожая",
+      "Harvest Gathering": "праздник урожая",
+      "Aniimo Trial": "Испытание анимо",
+      "Wild Surge": "Дикий наплыв",
+      "Outpost Vendor": "Торговец аванпоста",
+      "Sparkling Cube": "Искристый кубик",
+      "Perfect-потенциалом": "совершенным потенциалом",
+      "Perfect-потенциал": "совершенный потенциал"
     }
   },
   "weather": {
@@ -131,16 +155,19 @@
     "regions": [
       "Breezy Plains",
       "Nimbus Fields",
+      "Mistwoods",
+      "Argent Strait",
+      "Blitzwood",
       "Sea of Flowers",
-      "Forest of Falling Stars",
-      "The Argent Strait",
-      "Beast Fang Ridge",
-      "Echoback Landing",
       "Tideblossom Coast",
-      "Rosetower Woods",
       "Russet Highlands",
+      "Berylline Causeway",
+      "Echoback Landing",
+      "Beast Fang Ridge",
+      "Forest of Falling Stars",
       "Driftwise Meadow",
-      "Berylline Causeway"
+      "Zephyrus Landbridge",
+      "Rosetower Woods"
     ]
   },
   "daily": [
@@ -208,6 +235,12 @@
           "hint": "Проверь еду работникам. Заказы приносят Home Coins и немало Season Stamps"
         },
         {
+          "id": "d_prismana_flow",
+          "title": "Prismana Flow: активировать",
+          "max": 3,
+          "hint": "Карта → Изменить погоду. До 3 раз в день, нужна эссенция жилы. Привлекает редких Aniimo"
+        },
+        {
           "id": "d_supply",
           "title": "Daily Supply Pack",
           "hint": "Магазин → Обмен предметов, 50 Primegy. Открывается с ранга «Student III»"
@@ -257,7 +290,7 @@
           "title": "Harvest Moon Festival: 5 дейли-заданий",
           "event": "harvest",
           "max": 5,
-          "hint": "3 заказа дома · продажа в Co-op · вылазка с релейной станции · взрыхлить почву у друга · Harvest Gathering. С 10 уровня дома"
+          "hint": "3 заказа дома · продать продукты на рынке · путешествие с Aniimo на станции пересадки · взрыхлить землю у друга · Harvest Gathering. С 10 уровня дома"
         },
         {
           "id": "d_dazmand",
@@ -287,9 +320,9 @@
       "tasks": [
         {
           "id": "w_boss",
-          "title": "Еженедельные боссы (Омега / Альфа)",
+          "title": "Aniimo Trial: испытания Омег",
           "max": 3,
-          "hint": "50 Primegy за попытку. Материалы Resonance Star-Up и Capability Awakening"
+          "hint": "Institute Guide → Aniimo Trial. У каждой Омеги 3 попытки в неделю, 50 Primegy за попытку. Альфы — без лимита, по 30 Primegy"
         },
         {
           "id": "w_interlink",
@@ -337,12 +370,17 @@
           "title": "1000 Season Stamps за неделю",
           "max": 1000,
           "step": 50,
-          "hint": "Egg Heist 600 · Заказы 600 · Catch Report 400 · Альфы 300 · Interlink 300 · Wild Surge 300 · Tea Party 200 · Holo-Battle Sim 180. Остаток переносится"
+          "hint": "Egg Heist 600 · домашние заказы 600 · Catch Report 400 · альфы 300 · Interlink 300 · Wild Surge 300 · Tea Party 200 · Holo-Battle Sim 180. Остаток переносится"
         },
         {
           "id": "w_heist",
           "title": "Operation: Egg Heist",
           "hint": "PvEvP (Lost Isles), команда из 3 человек — самый жирный источник Season Stamps"
+        },
+        {
+          "id": "w_teaparty",
+          "title": "Tea Party",
+          "hint": "«Кофейная прохлада» в Астре, каждый вечер 18:00–02:00. До 200 Season Stamps в неделю"
         }
       ],
       "subtitle": "Institute Guide → вкладка Stamp Rush"
@@ -469,7 +507,7 @@
       "stages": [
         {
           "start": "2026-09-16",
-          "name": "Harvest Dailies & Moondew Crops"
+          "name": "Harvest Dailies, Moondew Crops"
         },
         {
           "start": "2026-10-07",
@@ -481,9 +519,9 @@
         }
       ],
       "todo": [
-        "Каждый день — 5 заданий Harvest Dailies за Moonray Wheat",
-        "Растить Moondew Radish и Waxing Moon Pepper: у каждого 8 мутаций, за них звёзды",
-        "Готовить праздничную еду — сезонные предметы дают очки праздника",
+        "Harvest Dailies — 5 заданий в день, по 150 Moonray Wheat за каждое",
+        "Moondew Crops: Moondew Radish и Waxing Moon Pepper, у каждой по 8 мутаций",
+        "Коллекция мутаций 0/32 — награды на 6 · 12 · 18 · 24 · 32",
         "Тратить Moonray Wheat в магазине: чертежи мебели и рецепты"
       ],
       "rewards": "Мебель, титул «Moon Farmer», Dream Spark (этапы 1 000 → 160 000 очков)",
@@ -840,7 +878,7 @@
       "id": "heist",
       "name": "Operation: Egg Heist",
       "category": "battle",
-      "desc": "Рейд — Lost Isles: ищи редкие яйца и успешно эвакуируйся с ними. Команда из 3 человек, PvEvP.",
+      "desc": "Исследуй лабиринт Lost Isles, найди редкие яйца и успешно эвакуируйся с ними. Команда из 3 человек, PvEvP.",
       "todo": [
         "Главный источник Season Stamps — до 600 в неделю",
         "С уровня IV «Elite Egg Seeker» открывается Chaos Mode"
