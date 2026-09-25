@@ -35,7 +35,8 @@ let data = null;
 let state = null;
 let hostSettings = null;
 let updateInfo = null;
-let settingsOpen = false;
+let sheetMode = null;
+let changelog = [];
 let evFilter = 'active';
 let statusSignature = '';
 const expanded = new Set();
@@ -57,6 +58,7 @@ function loadState() {
     wxLast: s.wxLast || { region: '', kind: 'rain', lead: 10 },
     remind: s.remind || { events: [24, 3] },
     fired: s.fired || {},
+    seenVersion: s.seenVersion || '',
   };
 }
 
@@ -657,11 +659,43 @@ function volumeLabel(percent) {
   return Number(percent) > 0 ? `${Math.round(percent)}%` : 'без звука';
 }
 
-function openSettings(open) {
-  settingsOpen = open;
-  $('#sheet').hidden = !open;
-  $('#sheet-backdrop').hidden = !open;
-  if (open) { send({ type: 'get-settings' }); renderSettings(); }
+// Шторка снизу: настройки или патчлог. null — закрыта.
+function openSheet(mode) {
+  sheetMode = mode;
+  $('#sheet').hidden = !mode;
+  $('#sheet-backdrop').hidden = !mode;
+  if (mode === 'settings') { send({ type: 'get-settings' }); renderSettings(); }
+  if (mode === 'changelog') {
+    renderChangelog();
+    state.seenVersion = appVersion();
+    saveState();
+    renderVersionChip();
+  }
+}
+
+const appVersion = () => updateInfo?.current || changelog[0]?.version || '';
+
+function renderVersionChip() {
+  const chip = $('#btn-changelog');
+  const v = appVersion();
+  chip.hidden = !v;
+  chip.textContent = 'v' + v;
+  chip.classList.toggle('new', !!v && state.seenVersion !== v);
+}
+
+function renderChangelog() {
+  const current = appVersion();
+  $('#sheet').innerHTML = `
+    <div class="sheet-head">
+      <h2>Что нового</h2>
+      <button class="icon-btn" data-act="close-settings" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="changelog">${changelog.map((r) => `
+      <section class="release ${r.version === current ? 'current' : ''}">
+        <div class="release-head"><b>v${esc(r.version)}</b><small>${fmtDate(r.date)} ${r.date.slice(0, 4)}${r.version === current ? ' · установлена' : ''}</small></div>
+        <ul>${r.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
+      </section>`).join('')}
+    </div>`;
 }
 
 // ---------- Живые таймеры ----------
@@ -752,7 +786,7 @@ function onSheetClick(e) {
   const el = e.target.closest('[data-act]');
   if (!el) return;
   switch (el.dataset.act) {
-    case 'close-settings': openSettings(false); return;
+    case 'close-settings': openSheet(null); return;
     case 'server': state.server = el.dataset.server; rollover(); break;
     case 'hotkey': send({ type: 'set-hotkey', value: el.dataset.hotkey }); return;
     case 'autostart': send({ type: 'set-autostart', value: el.getAttribute('aria-checked') !== 'true' }); return;
@@ -815,9 +849,10 @@ function bindUI() {
     render();
   }));
 
-  $('#btn-settings').addEventListener('click', () => openSettings(!settingsOpen));
+  $('#btn-settings').addEventListener('click', () => openSheet(sheetMode === 'settings' ? null : 'settings'));
+  $('#btn-changelog').addEventListener('click', () => openSheet(sheetMode === 'changelog' ? null : 'changelog'));
   $('#btn-hide').addEventListener('click', () => send({ type: 'hide' }));
-  $('#sheet-backdrop').addEventListener('click', () => openSettings(false));
+  $('#sheet-backdrop').addEventListener('click', () => openSheet(null));
   $('#sheet').addEventListener('click', onSheetClick);
   $('#update-banner').addEventListener('click', (e) => {
     if (e.target.closest('[data-act="do-update"]')) send({ type: 'do-update' });
@@ -844,7 +879,7 @@ function bindUI() {
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      if (settingsOpen) openSettings(false);
+      if (sheetMode) openSheet(null);
       else send({ type: 'hide' });
     } else if (!e.target.closest('input') && ['1', '2', '3', '4'].includes(e.key)) {
       state.tab = ['daily', 'weekly', 'events', 'weather'][Number(e.key) - 1];
@@ -858,18 +893,19 @@ function bindUI() {
       const msg = e.data;
       if (msg.type === 'settings') {
         hostSettings = msg;
-        if (settingsOpen) renderSettings();
+        if (sheetMode === 'settings') renderSettings();
       } else if (msg.type === 'shown') {
         render();
       } else if (msg.type === 'update') {
         updateInfo = msg;
+        renderVersionChip();
         renderUpdateBanner();
-        if (settingsOpen) renderSettings();
+        if (sheetMode === 'settings') renderSettings();
       } else if (msg.type === 'data-updated') {
         loadData().then((fresh) => {
           data = fresh;
           render();
-          if (settingsOpen) renderSettings();
+          if (sheetMode === 'settings') renderSettings();
         });
       } else if (msg.type === 'fired') {
         state.fired[msg.id] = Date.now();
@@ -888,6 +924,7 @@ async function loadData() {
 
 async function init() {
   data = await loadData();
+  changelog = await fetch('changelog.json', { cache: 'no-store' }).then((r) => r.json()).catch(() => []);
   state = loadState();
   rollover();
   pruneWeather();
@@ -896,6 +933,7 @@ async function init() {
   saveState();
   bindUI();
   render();
+  renderVersionChip();
   send({ type: 'get-update' });
   setInterval(tick, 1000);
 }

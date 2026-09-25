@@ -67,7 +67,29 @@ h2, h3, p { margin: 0; }
 .brand { position: relative; display: flex; align-items: center; gap: 8px; pointer-events: none; }
 .logo { height: 28px; filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .9)) drop-shadow(0 2px 6px rgba(255, 255, 255, .8)); }
 .brand-tag { font-size: 17px; transform: translateY(1px); }
+.ver-chip {
+  position: relative; pointer-events: auto; align-self: center; margin-left: 2px; padding: 1px 7px; border-radius: 99px;
+  font-size: 10.5px; font-weight: 900; color: var(--blue-deep); background: rgba(255, 255, 255, .8);
+  border: 1px solid var(--edge); box-shadow: var(--shadow); transition: background .15s;
+}
+.ver-chip[hidden] { display: none; }
+.ver-chip:hover { background: #fff; }
+.ver-chip.new::after {
+  content: ""; position: absolute; top: -2px; right: -2px; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--gold); border: 1.5px solid #fff;
+}
 .title-actions { position: relative; display: flex; gap: 6px; }
+
+/* Патчлог */
+.changelog { display: grid; gap: 10px; margin-top: 4px; }
+.release { padding: 11px 13px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.release-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+.release-head b { font-size: 15px; font-weight: 900; font-style: italic; color: var(--blue-deep); }
+.release-head small { color: var(--muted); font-weight: 700; font-size: 11.5px; }
+.release.current { border-color: rgba(30, 139, 240, .35); }
+.release ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.release li { position: relative; padding-left: 16px; font-weight: 600; }
+.release li::before { content: "✦"; position: absolute; left: 0; color: var(--gold); font-size: 11px; }
 .icon-btn {
   width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: var(--blue-deep);
   background: rgba(255, 255, 255, .78); border: 1px solid var(--edge); box-shadow: var(--shadow);
