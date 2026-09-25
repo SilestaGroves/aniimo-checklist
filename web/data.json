@@ -1,5 +1,5 @@
 {
-  "revision": 1,
+  "revision": 2,
   "updated": "2026-09-25",
   "resetHour": 4,
   "servers": [
@@ -58,6 +58,7 @@
         { "id": "d_sparkelf", "title": "SPARKELF: собрать Sparks за день", "event": "sparkelf", "hint": "500 Sparks → яйцо Prismana Sparkelf с Perfect-потенциалом" },
         { "id": "d_trail", "title": "Tracing the Trail: отправить экспедиции", "event": "trail", "hint": "2–4 Aniimo на таймерные расследования → Irisalis Petals, Flux Crystals" },
         { "id": "d_legend", "title": "Legendary Journey: продвинуть главу", "event": "legend", "hint": "Копи Irisalis Petals: 99 — на Legendary Aniipod, дальше по 50 на Windchaser's Departure" },
+        { "id": "d_harvest", "title": "Лунный праздник: 5 «Урожайных» заданий", "event": "harvest", "max": 5, "hint": "3 заказа дома · продажа в Co-op · вылазка с релейной станции · взрыхлить почву у друга · Harvest Gathering. С 10 уровня дома" },
         { "id": "d_dazmand", "title": "Aniimo Discovery: попытки поиска Dazmand", "event": "dazmand", "hint": "Потрать все Search Attempts, чтобы выследить и поймать Dazmand" },
         { "id": "d_whos", "title": "Who's That Aniimo?: фото по подсказке", "event": "whos", "hint": "Фотографируй Aniimo с нужными признаками — чем раньше угадаешь, тем лучше награда" },
         { "id": "d_eco", "title": "Idyll Ecological Investigation", "event": "eco", "hint": "Сканируй существ по теме региона" }
@@ -111,7 +112,8 @@
     "boost":   { "name": "Буст",        "color": "#12b886" },
     "hunt":    { "name": "Охота",       "color": "#f76707" },
     "mini":    { "name": "Мини-ивент",  "color": "#e64980" },
-    "battle":  { "name": "Бой",         "color": "#e03131" }
+    "battle":  { "name": "Бой",         "color": "#e03131" },
+    "home":    { "name": "Дом",         "color": "#c77a1e" }
   },
 
   "events": [
@@ -137,6 +139,23 @@
       ],
       "rewards": "Легендарный Aniimo Irisalis, Legendary Aniipod, магазин Legendary Journey",
       "windows": [{ "start": "2026-09-16", "end": "2026-12-09" }]
+    },
+    {
+      "id": "harvest", "name": "Лунный праздник урожая", "category": "home",
+      "desc": "Сезонный ивент Дома (Harvest Moon Festival). Открывается с 10 уровня дома (RV). Сезонные посевы, готовка, заказы и магазин за Moonray Wheat.",
+      "stages": [
+        { "start": "2026-09-16", "name": "Урожай: дейли и Moondew-посевы" },
+        { "start": "2026-10-07", "name": "Приготовления к празднику" },
+        { "start": "2026-10-21", "name": "Праздник урожая" }
+      ],
+      "todo": [
+        "Каждый день — 5 заданий «Урожайные» за Moonray Wheat",
+        "Растить Moondew Radish и Waxing Moon Pepper: у каждого 8 мутаций, за них звёзды",
+        "Готовить праздничную еду — сезонные предметы дают очки праздника",
+        "Тратить Moonray Wheat в магазине: чертежи мебели и рецепты"
+      ],
+      "rewards": "Мебель, титул «Moon Farmer», Dream Spark (этапы 1 000 → 160 000 очков)",
+      "windows": [{ "start": "2026-09-16", "end": "2026-10-27" }]
     },
     {
       "id": "dazmand", "name": "Aniimo Discovery: Dazmand", "category": "hunt",
