@@ -130,8 +130,12 @@ function windowsOf(ev) {
   }
   return ev.windows || [];
 }
+// Окно ивента: с resetHour дня start до resetHour дня после end.
+// endTime ("23:59") — если ивент кончается в другое время дня end (по серверу).
 function boundsOf(w) {
-  return { s: dayStart(w.start), e: w.end ? dayStart(w.end) + D : Infinity };
+  let e = Infinity;
+  if (w.end) e = w.endTime ? Date.parse(`${w.end}T${w.endTime}:00Z`) - offsetMs() + 60e3 : dayStart(w.end) + D;
+  return { s: dayStart(w.start), e };
 }
 function eventStatus(ev, now = Date.now()) {
   const ws = windowsOf(ev).map((w) => ({ w, ...boundsOf(w) }));
@@ -169,7 +173,8 @@ function N(s) {
 function currentStage(ev, now = Date.now()) {
   if (!ev.stages) return -1;
   let idx = -1;
-  ev.stages.forEach((sg, i) => { if (now >= dayStart(sg.start)) idx = i; });
+  // Главы, которые открываются по условию (unlock), текущей по дате не считаются.
+  ev.stages.forEach((sg, i) => { if (!sg.unlock && now >= dayStart(sg.start)) idx = i; });
   return idx;
 }
 function eventNote(ev, st, now = Date.now()) {
@@ -385,11 +390,12 @@ function renderEvent(ev, st, now) {
         const cur = i === stageIdx;
         const opened = now >= s;
         const tag = cur ? '<span class="stage-tag">сейчас</span>'
+          : sg.unlock ? '<span class="stage-tag">по условию</span>'
           : opened ? '<span class="stage-tag">открыта</span>'
           : `<span class="stage-tag" data-until="${s}" data-tpl="через {t}"></span>`;
         return `<div class="stage ${cur ? 'now' : opened ? 'open' : ''}">
           <span class="stage-num">${i + 1}</span>
-          <div class="stage-body"><b>${esc(N(sg.name))}</b><small>с ${fmtDate(sg.start)}</small></div>${tag}
+          <div class="stage-body"><b>${esc(N(sg.name))}</b><small>${sg.unlock ? esc(N(sg.unlock)) : `с ${fmtDate(sg.start)}`}</small></div>${tag}
         </div>`;
       }).join('')}</div>` : ''}
       ${allWins.length > 1 ? `<h4>Расписание</h4><div class="windows">${allWins.map((w) => {
@@ -453,7 +459,7 @@ function renderWeather() {
         <datalist id="wx-regions">${data.weather.regions.map((r) => `<option value="${esc(N(r))}">`).join('')}</datalist>
         <div class="wx-field"><span>Погода</span>
           <div class="seg wx-kinds">${data.weather.types.map((t) =>
-            `<button type="button" data-act="wx-kind" data-kind="${t.id}" aria-pressed="${t.id === last.kind}" style="--c:${t.color}">${WX_ICON[t.id] || ''}${esc(t.name)}</button>`).join('')}
+            `<button type="button" data-act="wx-kind" data-kind="${t.id}" aria-pressed="${t.id === last.kind}" style="--c:${t.color}">${WX_ICON[t.id] || ''}${esc(N(t.name))}</button>`).join('')}
           </div>
         </div>
         <div class="wx-row">
@@ -482,7 +488,7 @@ function renderWx(w, now) {
   return `<li class="task wx-item ${live ? 'live' : ''}" style="--c:${t.color}">
     <span class="wx-icon">${WX_ICON[w.kind] || ''}</span>
     <div class="task-body">
-      <div class="task-title">${esc(t.name)} · ${esc(N(w.region))}</div>
+      <div class="task-title">${esc(N(t.name))} · ${esc(N(w.region))}</div>
       <div class="task-hint">${dayWord(w.start)} в ${localTime(w.start)} · ${w.lead ? `напомню за ${w.lead} мин` : 'напомню в начале'}</div>
     </div>
     ${live ? '<span class="wx-when">идёт</span>' : `<span class="wx-when" data-until="${w.start}" data-tpl="через {t}"></span>`}
@@ -526,7 +532,7 @@ function syncReminders() {
     const t = wxType(w.kind);
     items.push({
       id: 'wx:' + w.id, at: w.start - w.lead * 60e3, until: w.start + 15 * 60e3, end: w.start, color: t.color,
-      title: `${t.name} — ${N(w.region)}`,
+      title: `${N(t.name)} — ${N(w.region)}`,
       text: w.lead ? `Начнётся через {left}, в ${localTime(w.start)}` : `Начинается сейчас, в ${localTime(w.start)}`,
     });
   }

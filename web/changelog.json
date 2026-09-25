@@ -1,5 +1,16 @@
 [
   {
+    "version": "1.3.0",
+    "date": "2026-09-25",
+    "items": [
+      "Русские названия сверены с клиентом игры: «Пакт призманы», «Вылупление: Спешка», «Безграничная связь» и другие",
+      "Новые ивенты: Set Off Together!, Holo-Battle Sim, Operation: Egg Heist, Mysterious Vendor",
+      "Legendary Journey: три главы, «Gift of Blessing» открывается после создания анипода",
+      "Точное время окончания ивентов (Legendary Journey — 23:59), таймеры совпадают с игрой",
+      "Holo-Battle Interlink: счётчик недельного прогресса до 60"
+    ]
+  },
+  {
     "version": "1.2.0",
     "date": "2026-09-25",
     "items": [
